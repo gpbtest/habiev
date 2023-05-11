@@ -148,7 +148,7 @@ sub parseUploadFile {
                 $str = $5;
             }
             else {
-                $str = "Неверное регулярное вырожение.";
+                writeToLog("Неверное регулярное вырожение: $line",$path."/log.txt");
             }
 
             my $query         = "INSERT INTO message (created,id, int_id,str,status) values (?,?,?,?,?)";
@@ -186,6 +186,14 @@ sub parseUploadFile {
         }
     }
     close($file);
+}
+
+sub writeToLog {
+    my ($message, $logfile) = @_;
+    open my $fh, '>>', $logfile or die "error open file '$logfile' for write: $!";
+    my $timestamp = localtime();
+    print $fh "[$timestamp] $message\n";
+    close $fh;
 }
 
 #Читаем конфиг
