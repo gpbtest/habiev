@@ -231,9 +231,9 @@ my $default_index = 'index.html';
 app->hook(
     before_dispatch => sub {
         my $c = shift;
-        state $base = $ARGV[1];
+      
         my $url_path = $c->req->url;
-        my $path = "$base$url_path";
+        my $path = "$url_path";
         if( -d $path ) {
             $url_path .= '/' unless $path =~ m|/\z|;
             $url_path .= $default_index;
@@ -243,7 +243,7 @@ app->hook(
 );
 
 my $static = app->static;
-print $path;
+
 push @{ $static->paths }, $path . "/public";
 push @{ $static->paths }, $path . "/public/assets";
 
