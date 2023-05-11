@@ -1,0 +1,8 @@
+{
+  "hostDB": "127.0.0.1",
+  "nameDB": "example_database",
+  "userDB": "root",
+  "userPasswordDB": "zmWZhytx2302",
+  "serverPort": 8080
+
+}
