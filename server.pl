@@ -133,7 +133,7 @@ sub parseUploadFile {
 
         #<= прибытие сообщения (в этом случае за флагом следует адрес отправителя)
         #разбираем строку регулярным вырожением, гггг-мм-дд чч:мм флаг внутренний ид сообщения емаил  ид сообщения
-        # my @arr = split('\s', $line);
+        # my @arr = split(' ', $line);
         if ( $line =~ /^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2}:\d{2})\s+(\S+)\s+(<=)\s+(\S+@\S+).+?\s+id=(\S+)/ ) {
             $date       = $1;
             $time       = $2;
@@ -231,7 +231,7 @@ my $default_index = 'index.html';
 app->hook(
     before_dispatch => sub {
         my $c = shift;
-      
+
         my $url_path = $c->req->url;
         my $path = "$url_path";
         if( -d $path ) {
