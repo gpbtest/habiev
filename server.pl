@@ -225,9 +225,27 @@ app->hook(
     }
 );
 
+my $default_index = 'index.html';
+
+
+app->hook(
+    before_dispatch => sub {
+        my $c = shift;
+        state $base = $ARGV[1];
+        my $url_path = $c->req->url;
+        my $path = "$base$url_path";
+        if( -d $path ) {
+            $url_path .= '/' unless $path =~ m|/\z|;
+            $url_path .= $default_index;
+            $c->req->url->path( $url_path );
+        }
+    }
+);
+
 my $static = app->static;
 print $path;
 push @{ $static->paths }, $path . "/public";
+push @{ $static->paths }, $path . "/public/assets";
 
 # Запуск приложения
 my $daemon = Mojo::Server::Daemon->new(
