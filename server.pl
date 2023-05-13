@@ -32,7 +32,7 @@ sub createUploaDir {
     my $uploadDir = $path . "/upload";
     unless ( -d $uploadDir ) {
         if ( mkdir $uploadDir ) {
-            return 0;
+            return 1;
         }
         else {
             return 0;
@@ -68,7 +68,7 @@ post '/api/upload-log-file' => sub {
     # парсим фаил
     parseUploadFile($filePath);
 
-    #парсим фаил
+    #Возвращаем  статус, новое имя файла, старое имя
     $c->render( json => { message => 'File upload success!', newFileName => $newFileName, oldFileName => $upload->filename } );
 };
 
@@ -202,7 +202,7 @@ sub getConfig {
 
     my $json_text = do {
         open( my $json_fh, "<:encoding(UTF-8)", "config.json" )
-            or die("Не удалось открыть фаил config.json: $!\n");
+            or die("Error open file config.json: $!\n");
         local $/;    #устанавливает временно значение переменной в undef. чтобы считать целиком
         <$json_fh>;
     };
